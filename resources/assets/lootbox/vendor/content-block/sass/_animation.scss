@@ -1,0 +1,37 @@
+.fxRollX {
+
+  transform: translateX(100%);
+  animation-duration: .5s;
+  &.navInNext  { z-index:10; animation-name: rollInXNext; }
+  &.navOutNext { z-index:10; animation-name: rollOutXNext; }
+  &.navInPrev  { z-index:10; animation-name: rollInXPrev; }
+  &.navOutPrev { z-index:10; animation-name: rollOutXPrev; }
+
+  &.active {
+    transform: translateX(0%);
+  }
+
+  &.flyNext       { transform: translateX(100%); }
+  &.flyPrev       { transform: translateX(-100%); }
+
+  &.flyInNext  { transition: transform .5s ease-in-out;transform: translateX(0%); }
+  &.flyOutNext { transition: transform .5s ease-in-out;transform: translateX(-100%); }
+  &.flyInPrev  { transition: transform .5s ease-in-out;transform: translateX(0%); }
+  &.flyOutPrev { transition: transform .5s ease-in-out;transform: translateX(100%); }
+}
+@keyframes rollInXNext {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0%); }
+}
+@keyframes rollOutXNext {
+  from { transform: translateX(0%); }
+  to { transform: translateX(-100%); }
+}
+@keyframes rollInXPrev {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0%); }
+}
+@keyframes rollOutXPrev {
+  from { transform: translateX(0%); }
+  to { transform: translateX(100%); }
+}

@@ -1,0 +1,43 @@
+.image-drag-drop {
+  position: relative;
+  padding:0;
+  margin:0;
+  font-size: 0;
+  width: 650px;
+
+  &:after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+
+  .item {
+    display:block;
+
+    &.pv {
+      position: relative;
+      float:left;
+      width: 100px;
+      height: 100px;
+      margin-right: 10px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+
+      background: {
+        position: center center;
+        repeat: no-repeat;
+        size: cover;
+      }
+
+      &:nth-child(6n) {
+        margin-right:0px;
+      }
+    }
+
+    input[type="checkbox"] {
+      position: absolute;
+      top: 5px;
+      left: 5px;
+    }
+  }
+}

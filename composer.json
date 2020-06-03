@@ -1,0 +1,37 @@
+{
+    "name": "psytelepat/lootbox",
+    "description": "CMS-toolbox for Laravel",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mikhail Prokofyev",
+            "email": "me@telepat.cc"
+        }
+    ],
+    "require": {
+        "anahkiasen/former": "^4.2",
+        "intervention/image": "^2.3",
+        "artesaos/seotools": "^0.12.1",
+        "mobiledetect/mobiledetectlib": "^2.8",
+        "okipa/laravel-table": "^1.0",
+        "rtconner/laravel-tagging": "^3.0",
+        "sofa/eloquence": "^5.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "Psytelepat\\Lootbox\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Psytelepat\\Lootbox\\BaseServiceProvider"
+            ],
+            "aliases": {
+                "Lootbox": "Psytelepat\\Lootbox\\LootboxFacade",
+                "ContentBlock": "Psytelepat\\Lootbox\\ContentBlock\\ContentBlockFacade",
+                "Publicator": "Psytelepat\\Lootbox\\Publicator\\PublicatorFacade"
+            }
+        }
+    }
+}
