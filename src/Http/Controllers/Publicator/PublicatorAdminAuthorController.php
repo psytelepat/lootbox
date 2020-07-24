@@ -81,5 +81,7 @@ class PublicatorAdminAuthorController extends AdminController
                 throw new \Exception('Invalid mode');
                 break;
         }
+
+        return true;
     }
 }
