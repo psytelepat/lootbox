@@ -161,7 +161,12 @@ class ContentBlockModel extends Model
     public function parseVideoCode(int $width = 600, int $height = 400): string
     {
         $mod = 'fill';
-        return self::_parseVideoCode($this->code, $this->grp, $width, $height, $mod);
+        
+        if (is_string($this->code)) {
+            return self::_parseVideoCode($this->code, $this->grp, $width, $height, $mod);
+        }
+
+        return '';
     }
 
     public static function _parseVideoCode(string $video_code, int $grp, int $width = 736, int $height = 414, string $mod = 'fill'): string
