@@ -4,6 +4,11 @@
       <label>{{ trans('lootbox::content-block.form.video_code') }}</label><br>
       <textarea class="code-fld" name="code">{!! $block->code !!}</textarea>
     </span>
+    <span class="line fileUpload">
+@if( $block )
+{!! ContentBlock::uploadField('content-block.video',$block) !!}
+@endif
+    </span>
   </span>
   <div class="btn btn-success btn-sm saveBlock" title="{{ trans('lootbox::content-block.form.save') }}"><i class="fa fa-save"></i> {{ trans('lootbox::content-block.form.save') }}</div>
 </div>

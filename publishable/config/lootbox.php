@@ -125,6 +125,11 @@ return [
                 'object' => '\Psytelepat\Lootbox\ContentBlock\ContentBlockModel',
                 'upload' => '\Psytelepat\Lootbox\ContentBlock\ContentBlockQuoteImage',
             ],
+            'video' => [
+                'handle' => 'video',
+                'object' => '\Psytelepat\Lootbox\ContentBlock\ContentBlockModel',
+                'upload' => '\Psytelepat\Lootbox\ContentBlock\ContentBlockVideoImage',
+            ],
         ],
     ],
 
@@ -136,6 +141,18 @@ return [
             [ 'size' => 4, 'w' => 100,  'h' => 100,  'mode' => 'fit', ],
         ],
         'Psytelepat\Lootbox\ContentBlock\ContentBlockImage' => [
+            [ 'size' => 1, 'w' => 1920, 'h' => 1080, 'mode' => 'default', ],
+            [ 'size' => 2, 'w' => 960, 'h' => 540, 'mode' => 'default', ],
+            [ 'size' => 3, 'w' => 400, 'h' => 225,  'mode' => 'default', ],
+            [ 'size' => 4, 'w' => 200, 'h' => 112,  'mode' => 'default', ],
+        ],
+        'Psytelepat\Lootbox\ContentBlock\ContentQuoteImage' => [
+            [ 'size' => 1, 'w' => 1920, 'h' => 1080, 'mode' => 'default', ],
+            [ 'size' => 2, 'w' => 960, 'h' => 540, 'mode' => 'default', ],
+            [ 'size' => 3, 'w' => 400, 'h' => 225,  'mode' => 'default', ],
+            [ 'size' => 4, 'w' => 200, 'h' => 112,  'mode' => 'default', ],
+        ],
+        'Psytelepat\Lootbox\ContentBlock\ContentVideoImage' => [
             [ 'size' => 1, 'w' => 1920, 'h' => 1080, 'mode' => 'default', ],
             [ 'size' => 2, 'w' => 960, 'h' => 540, 'mode' => 'default', ],
             [ 'size' => 3, 'w' => 400, 'h' => 225,  'mode' => 'default', ],
