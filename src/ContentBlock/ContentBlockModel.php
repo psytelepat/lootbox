@@ -10,13 +10,14 @@ use DB;
 use ContentBlock;
 use Psytelepat\Lootbox\ContentBlock\ContentBlockImage;
 use Psytelepat\Lootbox\ContentBlock\ContentBlockQuoteImage;
+use Psytelepat\Lootbox\ContentBlock\ContentBlockVideoImage;
 
 class ContentBlockModel extends Model
 {
-
     protected $table = 'content_block';
     protected $image_class = ContentBlockImage::class;
     protected $quote_image_class = ContentBlockQuoteImage::class;
+    protected $video_image_class = ContentBlockVideoImage::class;
 
     protected static function boot()
     {
@@ -118,6 +119,23 @@ class ContentBlockModel extends Model
     public function clearQuoteImages(): void
     {
         foreach ($this->quoteImages(1) as $image) {
+            $image->delete();
+        }
+    }
+
+    public function videoImage(int $size = 3): ?BaseImage
+    {
+        return $this->video_image_class::where('usr', $this->id)->where('size', $size)->orderByRaw('rand()')->first();
+    }
+
+    public function videoImages(int $size = 3): Collection
+    {
+        return $this->video_image_class::where('usr', $this->id)->where('size', $size)->orderBy('pos', 'asc')->get();
+    }
+
+    public function clearVideoImages(): void
+    {
+        foreach ($this->videoImages(1) as $image) {
             $image->delete();
         }
     }
