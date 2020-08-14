@@ -59,11 +59,12 @@ class ContentBlockUploadController extends Controller
             return response()->json([ 'error' => 1, 'message' => 'Unable to load block' ], 404);
         }
 
-        if ($this->limit > 0 && ContentBlock::uploadsCountForGallery($this->upload_class, $item) >= $this->limit) {
+        $uploadsCount = ContentBlock::uploadsCountForGallery($this->upload_class, $item);
+        if ($this->limit > 0 && $uploadsCount >= $this->limit) {
             return response()->json([ 'error' => 1, 'message' => 'Images limit exceed', ]);
         }
 
-        $limit = $this->limit > 0 ? $this->limit : PHP_INT_MAX;
+        $limit = $this->limit > 0 ? $this->limit - $uploadsCount : PHP_INT_MAX;
 
         $file = null;
         $forceAjax = null;

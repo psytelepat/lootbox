@@ -62,11 +62,12 @@ class UploadController extends Controller
             return response()->json([ 'error' => 1, 'message' => 'Unable to find object', ]);
         }
 
-        if ($this->limit > 0 && Lootbox::uploadsCountForGallery($this->upload_class, $item) >= $this->limit) {
+        $uploadsCount = Lootbox::uploadsCountForGallery($this->upload_class, $item);
+        if ($this->limit > 0 && $uploadsCount >= $this->limit) {
             return response()->json([ 'error' => 1, 'message' => 'Images limit exceed', ]);
         }
 
-        $limit = $this->limit > 0 ? $this->limit : PHP_INT_MAX;
+        $limit = $this->limit > 0 ? $this->limit - $uploadsCount : PHP_INT_MAX;
 
         $file = null;
         $forceAjax = null;
