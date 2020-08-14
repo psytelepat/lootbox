@@ -23,6 +23,7 @@ class UploadController extends Controller
     protected $handle;
     protected $object_class;
     protected $upload_class;
+    protected $limit;
     protected $upload_type = 'image';
 
     protected function resolveTarget(string $target)
@@ -36,6 +37,7 @@ class UploadController extends Controller
         $this->handle = Arr::get($this->config, 'handle');
         $this->object_class = Arr::get($this->config, 'object');
         $this->upload_class = Arr::get($this->config, 'upload');
+        $this->limit = Arr::get($this->config, 'limit', 0);
     }
 
     public function view(Request $request, string $target, int $id = null)
@@ -57,7 +59,11 @@ class UploadController extends Controller
     {
         $this->resolveTarget($target);
         if (! ( $item = $this->object_class::find($id) )) {
-            return response()->json([ 'error' => 1, ]);
+            return response()->json([ 'error' => 1, 'message' => 'Unable to find object', ]);
+        }
+
+        if ($this->limit > 0 && Lootbox::uploadsCountForGallery($this->upload_class, $item) >= $this->limit) {
+            return response()->json([ 'error' => 1, 'message' => 'Images limit exceed', ]);
         }
 
         $file = null;

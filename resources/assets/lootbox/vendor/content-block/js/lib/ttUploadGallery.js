@@ -48,7 +48,9 @@ module.exports = BaseClass.extend({
     if(this.select_all) this.select_all = null;
     if(this.delete_selected) this.delete_selected = null;
     
-    this.uploader.element.style.display = json.canUpload ? 'block' : 'none';  
+    if (json && (typeof json.canUpload != 'undefined')) {
+      this.uploader.element.style.display = json.canUpload ? 'block' : 'none';
+    }
 
     var dd = this.gallery.querySelector('.ttDragDrop'),
         select_all = this.gallery.querySelector('.select-all'),

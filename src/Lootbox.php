@@ -47,6 +47,11 @@ class Lootbox
         ])->render();
     }
 
+    public static function uploadsCountForGallery(string $upload_class, Model &$item): int
+    {
+        return $upload_class::where('usr', $item->id)->where('size', 1)->count();
+    }
+
     public static function uploadsForGallery(string $upload_class, Model &$item): Collection
     {
         return $upload_class::where('usr', $item->id)
