@@ -27,6 +27,7 @@ class ContentBlockUploadController extends Controller
     protected $handle;
     protected $object_class;
     protected $upload_class;
+    protected $limit;
     protected $upload_type = 'image';
 
     protected function resolveTarget(string $target): void
@@ -40,6 +41,7 @@ class ContentBlockUploadController extends Controller
         $this->handle = Arr::get($this->config, 'handle');
         $this->object_class = Arr::get($this->config, 'object');
         $this->upload_class = Arr::get($this->config, 'upload');
+        $this->limit = Arr::get($this->config, 'limit', 0);
     }
 
     protected function validateUploadedFile(&$file): bool
@@ -57,6 +59,12 @@ class ContentBlockUploadController extends Controller
             return response()->json([ 'error' => 1, 'message' => 'Unable to load block' ], 404);
         }
 
+        if ($this->limit > 0 && ContentBlock::uploadsCountForGallery($this->upload_class, $item) >= $this->limit) {
+            return response()->json([ 'error' => 1, 'message' => 'Images limit exceed', ]);
+        }
+
+        $limit = $this->limit > 0 ? $this->limit : PHP_INT_MAX;
+
         $file = null;
         $forceAjax = null;
         $tempFilePath = null;
@@ -70,6 +78,7 @@ class ContentBlockUploadController extends Controller
                         $file = new UploadedFile($tempFilePath, $fileName, null, filesize($tempFilePath), 0, false);
                         if ($this->validateUploadedFile($file)) {
                             $this->upload_class::processFileUpload($item, $file, 'jpg');
+                            $limit--;
                         }
                         unlink($tempFilePath);
                     }
@@ -87,6 +96,10 @@ class ContentBlockUploadController extends Controller
                         if ($file && $file->isValid()) {
                             if ($this->validateUploadedFile($file)) {
                                 $this->upload_class::processFileUpload($item, $file, 'jpg');
+                                $limit--;
+                                if ($limit <= 0) {
+                                    break;
+                                }
                             }
                         }
                     }
@@ -100,6 +113,7 @@ class ContentBlockUploadController extends Controller
             return [
                 'success' => 1,
                 'html'    => ContentBlock::uploadsGallery($this->upload_class, $item, $target),
+                'canUpload' => $limit > 0,
             ];
         } else {
             return true;
@@ -181,7 +195,11 @@ class ContentBlockUploadController extends Controller
             }
         }
 
-        return [ 'success' => 1, 'html' => ContentBlock::uploadsGallery($this->upload_class, $item, $this->target), ];
+        return [
+            'success' => 1,
+            'html' => ContentBlock::uploadsGallery($this->upload_class, $item, $this->target),
+            'canUpload' => $this->limit > 0 && ContentBlock::uploadsCountForGallery($this->upload_class, $item) < $this->limit,
+        ];
     }
 
     public function reset(): void

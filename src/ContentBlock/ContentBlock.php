@@ -229,6 +229,18 @@ class ContentBlock
     }
     
     /**
+     * Количество загруженных файлов к объекту
+     *
+     * @param  string $upload_class класс загружаемых файлов
+     * @param  ContentBlockModel $item объект модели
+     * @return int
+     */
+    public static function uploadsCountForGallery(string $upload_class, ContentBlockModel &$item) : int
+    {
+        return $upload_class::where('usr', $item->id)->where('size', 1)->count();
+    }
+
+    /**
      * Загруженные файлы указанного класса для указанной модели
      *
      * @param  string $upload_class класс загружаемых файлов
