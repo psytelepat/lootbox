@@ -35,9 +35,9 @@ module.exports = BaseClass.extend({
     return false;
   },
   updateWithResponse : function(json) {
-    this.redrawWithHTML( json.html );
+    this.redrawWithHTML( json.html, json );
   },
-  redrawWithHTML : function(html) {
+  redrawWithHTML : function(html, json) {
 
     var self = this;
 
@@ -47,6 +47,8 @@ module.exports = BaseClass.extend({
     if(this.dragdrop) this.dragdrop = null;
     if(this.select_all) this.select_all = null;
     if(this.delete_selected) this.delete_selected = null;
+    
+    this.uploader.element.style.display = json.canUpload ? 'block' : 'none';  
 
     var dd = this.gallery.querySelector('.ttDragDrop'),
         select_all = this.gallery.querySelector('.select-all'),
