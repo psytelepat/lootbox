@@ -66,6 +66,8 @@ class UploadController extends Controller
             return response()->json([ 'error' => 1, 'message' => 'Images limit exceed', ]);
         }
 
+        $limit = $this->limit > 0 ? $this->limit : PHP_INT_MAX;
+
         $file = null;
         $forceAjax = null;
         $tempFilePath = null;
@@ -79,6 +81,7 @@ class UploadController extends Controller
                         $file = new UploadedFile($tempFilePath, $fileName, null, filesize($tempFilePath), 0, false);
                         if ($this->validateUploadedFile($file)) {
                             $this->upload_class::processFileUpload($item, $file);
+                            $limit--;
                         }
                         unlink($tempFilePath);
                     }
@@ -96,6 +99,10 @@ class UploadController extends Controller
                         if ($file && $file->isValid()) {
                             if ($this->validateUploadedFile($file)) {
                                 $this->upload_class::processFileUpload($item, $file);
+                                $limit--;
+                                if ($limit <= 0) {
+                                    break;
+                                }
                             }
                         }
                     }
@@ -109,6 +116,7 @@ class UploadController extends Controller
             return response()->json([
                 'success' => 1,
                 'html'    => Lootbox::uploadsGallery($this->upload_class, $item, $target),
+                'canUpload' => $limit > 0,
             ]);
         } else {
             return true;
@@ -132,13 +140,19 @@ class UploadController extends Controller
         if (! ( $item = $this->object_class::find($id) )) {
             return response()->json([ 'error' => 1, ]);
         }
+
         $ids = explode(',', $request->input('delete'));
         if ($ids && is_array($ids) && count($ids)) {
             foreach ($ids as $id) {
                 $this->upload_class::find($id)->delete();
             }
         }
-        return [ 'success' => 1, 'html' => Lootbox::uploadsGallery($this->upload_class, $item, $this->target), ];
+
+        return [
+            'success' => 1,
+            'html' => Lootbox::uploadsGallery($this->upload_class, $item, $this->target),
+            'canUpload' => $this->limit > 0 && Lootbox::uploadsCountForGallery($this->upload_class, $item) < $this->limit,
+        ];
     }
 
     public function edit(Request $request, string $target, int $id, int $fileID)
