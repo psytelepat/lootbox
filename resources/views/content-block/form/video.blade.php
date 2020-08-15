@@ -1,9 +1,8 @@
 <div class="cntBlk video" grp="{{ $block->grp }}" mode="{{ $block->mode }}" state="{{ $data->state }}">
   <span class="cntBlk videoBlk">
-    <span class="line code">
-      <label>{{ trans('lootbox::content-block.form.video_code') }}</label><br>
-      <textarea class="code-fld" name="code">{!! $block->code !!}</textarea>
-    </span>
+    <div class="form-group row">
+      <div class="col-12"><input class="form-control code-fld" name="code" type="text" value="{{$block->code}}" placeholder="ID Vimeo видео"></div>
+    </div>
     <span class="line fileUpload">
 @if( $block )
 {!! ContentBlock::uploadField('content-block.video',$block) !!}
