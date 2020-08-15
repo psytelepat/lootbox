@@ -265,10 +265,10 @@ class BaseImage extends Model
 
     public function updateSEO(array $data) : void
     {
-        $this->alt = array_get($data, 'alt');
-        $this->title = array_get($data, 'title');
-        $this->description = array_get($data, 'description');
-        $href = array_get($data, 'href', null);
+        $this->alt = Arr::get($data, 'alt');
+        $this->title = Arr::get($data, 'title');
+        $this->description = Arr::get($data, 'description');
+        $href = Arr::get($data, 'href', null);
         if (!$href || filter_var($href, FILTER_VALIDATE_URL)) {
             $this->href = $href;
         }

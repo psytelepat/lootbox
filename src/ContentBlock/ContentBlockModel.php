@@ -142,9 +142,9 @@ class ContentBlockModel extends Model
 
     public function blockView(&$config, array $vars = null): string
     {
-        $data        = new \stdClass;
-        $data->content   = false;
-        $data->css   = false;
+        $data = new \stdClass;
+        $data->content = false;
+        $data->css = false;
         $data->state = 0;
 
         if ($vars) {
@@ -161,7 +161,7 @@ class ContentBlockModel extends Model
         }
 
         $data->css = implode(' ', array_values($css_classes));
-        $mode_tid = array_get($config->block_modes, $this->mode);
+        $mode_tid = Arr::get($config->block_modes, $this->mode);
         return view(Arr::get($vars, 'view_prefix', 'lootbox::content-block.view.') . $mode_tid, [ 'block' => $this, 'data'  => $data, ])->render();
     }
 
@@ -172,7 +172,7 @@ class ContentBlockModel extends Model
         $data->css = false;
         $data->state = 1;
 
-        $mode_tid = array_get($config->block_modes, $this->mode);
+        $mode_tid = Arr::get($config->block_modes, $this->mode);
         return view(Arr::get($vars, 'view_prefix', 'lootbox::content-block.form.') . $mode_tid, [ 'block' => $this, 'data' => $data ])->render();
     }
 

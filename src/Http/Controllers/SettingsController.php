@@ -27,17 +27,17 @@ class SettingsController extends BaseController
                     $fields = Arr::get($section, 'fields');
                     if (is_array($fields) && !empty($fields)) {
                         foreach ($fields as $field_tid => $field) {
-                            switch (array_get($field, 'type')) {
+                            switch (Arr::get($field, 'type')) {
                                 case 'file':
                                     if ($file = $request->file($field_tid)) {
                                         // delete previous
 
                                         $filename = Util::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)) . '.' . pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
-                                        $file->move(storage_path('app/public/' . array_get($field, 'path')), $filename);
+                                        $file->move(storage_path('app/public/' . Arr::get($field, 'path')), $filename);
                                         config([ 'site-settings.'.$field_tid => $filename, ]);
-                                        config([ 'site-settings.'.$field_tid . '_filesize' => filesize(storage_path('app/public/' . array_get($field, 'path')) . $filename), ]);
+                                        config([ 'site-settings.'.$field_tid . '_filesize' => filesize(storage_path('app/public/' . Arr::get($field, 'path')) . $filename), ]);
                                     } elseif ($request->input('delete_'.$field_tid) && $file = config('site-settings.'.$field_tid)) {
-                                        Storage::disk('public')->delete('app/public/' . array_get($field, 'path') . $file);
+                                        Storage::disk('public')->delete('app/public/' . Arr::get($field, 'path') . $file);
                                         config([ 'site-settings.'.$field_tid => null, ]);
                                         config([ 'site-settings.'.$field_tid . '_filesize' => null, ]);
                                     }

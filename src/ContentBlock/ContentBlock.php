@@ -20,9 +20,9 @@ class ContentBlock
     public static function cfg(string $cfg) : object
     {
         $config = config('content-block.cfg.' . $cfg, []);
-        $config['trg'] = array_get($config, 'trg', 1);
-        $config['block_table'] = array_get($config, 'block_table', 'content_block');
-        $config['block_modes'] = array_get($config, 'block_modes', [
+        $config['trg'] = Arr::get($config, 'trg', 1);
+        $config['block_table'] = Arr::get($config, 'block_table', 'content_block');
+        $config['block_modes'] = Arr::get($config, 'block_modes', [
             1 => 'text',
             2 => 'photo',
             3 => 'gallery',
@@ -32,9 +32,9 @@ class ContentBlock
             7 => 'double-column',
             8 => 'publicator-form',
         ]);
-        $config['object_class'] = array_get($config, 'object_class');
-        $config['block_class'] = array_get($config, 'block_class', ContentBlockModel::class);
-        $config['image_class'] = array_get($config, 'image_class', ContentBlockImage::class);
+        $config['object_class'] = Arr::get($config, 'object_class');
+        $config['block_class'] = Arr::get($config, 'block_class', ContentBlockModel::class);
+        $config['image_class'] = Arr::get($config, 'image_class', ContentBlockImage::class);
 
         return (object)$config;
     }
