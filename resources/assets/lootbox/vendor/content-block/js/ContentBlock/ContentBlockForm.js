@@ -232,7 +232,7 @@ module.exports = BaseClass.extend({
         content = this.element.querySelector('textarea.cnt-fld'),
         content1 = this.element.querySelector('textarea.cnt-fld1'),
         content2 = this.element.querySelector('textarea.cnt-fld2'),
-        code = this.element.querySelector('textarea.code-fld');
+        code = this.element.querySelector('.code-fld');
 
     if(style) data.style = style.options[style.selectedIndex].value;
     if(align) data.align = align.options[align.selectedIndex].value;

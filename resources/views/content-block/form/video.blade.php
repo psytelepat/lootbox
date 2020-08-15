@@ -1,7 +1,9 @@
 <div class="cntBlk video" grp="{{ $block->grp }}" mode="{{ $block->mode }}" state="{{ $data->state }}">
   <span class="cntBlk videoBlk">
     <div class="form-group row">
-      <div class="col-12"><input class="form-control code-fld" name="code" type="text" value="{{$block->code}}" placeholder="ID Vimeo видео"></div>
+      <div class="col-12">
+        <input class="form-control code-fld" name="code" type="text" value="{{$block->code}}" placeholder="ID Vimeo видео" />
+      </div>
     </div>
     <span class="line fileUpload">
 @if( $block )
